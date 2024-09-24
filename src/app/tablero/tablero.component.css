@@ -10,6 +10,7 @@
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-gap: 5px;
+  background-color: #dbade3;
   
 }
 
