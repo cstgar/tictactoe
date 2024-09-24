@@ -1,0 +1,7 @@
+<div class="contenedor">
+    <div class="tablero">
+        <app-celdas *ngFor="let celda of celdas; trackBy: trackByIndex" [value]="celda.value" [index]="celda.index" (click)="hacerMovimiento(celda.index)"></app-celdas>
+    </div>
+    <button class="resetear" (click)="resetearTablero()">Reiniciar Juego</button>
+      
+</div>
