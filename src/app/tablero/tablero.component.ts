@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class TableroComponent {
   //celdas
-  celdas: { value: string, index: number }[] = Array(9).fill('').map((_, index) => ({ value: '', index }));
+  celdas: string[] = Array(9).fill(''); //generando el tablero de 9 celdas y rellenandolas con un string vacío
   jugadorActual: string = 'X';
   ganador: string | null = null;
 
@@ -19,13 +19,13 @@ export class TableroComponent {
   hacerMovimiento (index: number) {
     //celda en el tablero que fue presionada
     //si la celda en la posición index no ha sido presionada (o está vacía) y si no hay ganador entonces
-    if (!this.celdas[index].value && !this.ganador) {
-      this.celdas[index].value = this.jugadorActual; //entonces se iguala la celda actual al jugadorActual con la 'X'
+    if (!this.celdas[index] && !this.ganador) {
+      this.celdas[index] = this.jugadorActual; //entonces se iguala la celda actual al jugadorActual con la 'X'
       // se revisa que ese movimiento que se hizo sea ganador con la función revisarGanador
       if (this.revisarGanador()) { //si es ganador entonces
         this.ganador = this. jugadorActual; //el ganador se iguala al jugador actual
         alert(`${this.jugadorActual} gana!!`); //Se manda un alert al jugador para que sepa que ha ganado
-      } else if (this.celdas.every(casilla => casilla.value)) { //sino hay ganador entonces verifica si hay empate
+      } else if (this.celdas.every(casilla => casilla)) { //sino hay ganador entonces verifica si hay empate
         // el método every es para los arrays y verifica si todos los elementos del array cumplen con una condición especificada devolviendo true
         //verifica si todas las celdas del tablero están llenas y si todas las celdas están llenas y no hay un ganador, se declara un empate.
         alert('Empate!!');
@@ -53,20 +53,15 @@ export class TableroComponent {
 
     // revisar si en el tablero hay alguna combinación ganadora
     return combinacionesGanadoras.some( combinacion => {// el metodo some es un metodo de los arrays que evalua una condición y si almenos una cumple la condición devuelve true
-      return combinacion.every( index => this.celdas[index].value === this.jugadorActual)//combinacion es el sub-array de las combinacioinesGanadoras es decir checa filas, columnas y diagonales si son iguales al jugadorActual para saber que todas son iguales
+      return combinacion.every( index => this.celdas[index] === this.jugadorActual)//combinacion es el sub-array de las combinacioinesGanadoras es decir checa filas, columnas y diagonales si son iguales al jugadorActual para saber que todas son iguales
     })
   }
 
   //función resetear el tablero
   resetearTablero () {
-    this.celdas = Array(9).fill('').map((_, index) => ({ value: '', index })); //crea un nuevo array con cadenas vacías para asegurarnos de limpiar las referencias de los datos anteriores
+    this.celdas = Array(9).fill(''); //crea un nuevo array con cadenas vacías para asegurarnos de limpiar las referencias de los datos anteriores
     this.jugadorActual = 'X';
     this.ganador = null;
-  }
-
-  // Definición de la función trackByIndex
-  trackByIndex(index: number, item: any) {
-    return index;
   }
 
 
