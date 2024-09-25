@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CeldasComponent } from '../celdas/celdas.component';
 import { CommonModule } from '@angular/common';
+import {VoiceRecognitionService} from '../service/voice-recognition.service'
 
 @Component({
   selector: 'app-tablero',
@@ -8,8 +9,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, CeldasComponent],
   templateUrl: './tablero.component.html',
   styleUrls: ['./tablero.component.css'],
+  providers: [VoiceRecognitionService] 
 })
-export class TableroComponent {
+export class TableroComponent implements OnInit {
   //celdas
   celdas: string[] = Array(9).fill(''); //generando el tablero de 9 celdas y rellenandolas con un string vacío
   jugadorActual: string = 'X';
@@ -64,5 +66,24 @@ export class TableroComponent {
     this.ganador = null;
   }
 
+
+  //La parte del servicio de web speech api nativa
+  aunEstaReconociendo = false; // bandera para saber si aún esta corriendo el servicio
+  
+  constructor(public servicio: VoiceRecognitionService) {
+    this.servicio.iniciar();
+    this.servicio.setTableroComponent(this);
+  }
+
+  ngOnInit(): void {}
+
+  iniciarServicio() {
+    this.aunEstaReconociendo = this.servicio.comenzar() === true ? true : false;
+  }
+
+  detenerServicio() {
+    this.aunEstaReconociendo = this.servicio.detener() === false ? false : true;
+    this.servicio.procesarComandos(this.servicio.temporales);
+  }
 
 }

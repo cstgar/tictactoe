@@ -1,4 +1,5 @@
 <div class="contenedor">
+    <h2>Juego del Gato</h2>
     <div class="tablero">
         @for (celda of celdas; track celda; let index = $index) {
 
@@ -6,5 +7,12 @@
         }        
     </div>
     <button class="resetear" (click)="resetearTablero()">Reiniciar Juego</button>
+
+   
+
+    <div class="btn-contenedor">
+        <button class="iniciarRV" (click)="iniciarServicio()">Iniciar Reconocimiento de Voz</button>
+        <button class="detenerRV" (click)="detenerServicio()">Detener Reconocimiento de Voz</button>
+    </div>
       
 </div>

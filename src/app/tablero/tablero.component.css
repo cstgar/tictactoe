@@ -15,5 +15,25 @@
 }
 
 .resetear {
-  margin: 36px;
+  margin: 32px;
+  border-radius: 4%;
+  padding: 8px;
+}
+
+.iniciarRV {
+  margin: 12px;
+  border-radius: 6%;
+  padding: 15px;
+  color: #7dcea0;
+}
+
+.detenerRV {
+  margin: 12px;
+  border-radius: 6%;
+  padding: 15px;
+  color: #f1948a;
+}
+
+.btn-contenedor {
+  display: inline;
 }
