@@ -21,23 +21,23 @@ export class VoiceRecognitionService {
   iniciar() {
     this.reconocimiento.continuous = true;
     this.reconocimiento.interimResults = true;
-    this.reconocimiento.lang = 'es-ES';
+    this.reconocimiento.lang = 'es-MX';
 
-    this.reconocimiento.addEventListener('resultado', (e: any) => {
-      const transcripcion = Array.from(e.results)
-        .map((resultado: any) => resultado[0])
-        .map((resultado) => resultado.transcript)
-        .join('');
-      this.transcripcion_arr.push(transcripcion)
-      this.temporales = transcripcion;
-      console.log(this.transcripcion_arr);
-
-      const confidence = Array.from(e.results)
+    this.reconocimiento.addEventListener('result', (e: any) => {
+      const transcript = Array.from(e.results)
         .map((result: any) => result[0])
-        .map((result) => result.confidence)
+        .map((result) => result.transcript)
         .join('');
-      this.confidencial_arr.push(confidence);
-      console.log(this.confidencial_arr);
+      this.transcripcion_arr.push(transcript)
+      this.temporales = transcript;
+      console.log(this.transcripcion_arr[this.transcripcion_arr.length -1]);
+
+      // const confidence = Array.from(e.results)
+      //   .map((result: any) => result[0])
+      //   .map((result) => result.confidence)
+      //   .join('');
+      // this.confidencial_arr.push(confidence);
+      // console.log(this.confidencial_arr);
     });
 
     this.reconocimiento.addEventListener('end', (condition: any) => {
