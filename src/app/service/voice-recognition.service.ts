@@ -15,8 +15,15 @@ export class VoiceRecognitionService {
   confidencial_arr: string[] = [];
   estaInciado = false; // Bandera que revisa si el usuario detuvo el servicio
   estaDetenidoAutomatica = true; // Bandera que revisa si el servicio se detuvo automáticamente
+  private tableroComponent: any;
+  private partialCommand: string [] = [];
+  private commandTimeout: any;
   
   constructor() { }
+
+  setTableroComponent(component: any) {
+    this.tableroComponent = component;
+  }
 
   iniciar() {
     this.reconocimiento.continuous = true;
@@ -38,6 +45,8 @@ export class VoiceRecognitionService {
       //   .join('');
       // this.confidencial_arr.push(confidence);
       // console.log(this.confidencial_arr);
+
+      this.procesarComandos(transcript);
     });
 
     this.reconocimiento.addEventListener('end', (condition: any) => {
@@ -50,6 +59,7 @@ export class VoiceRecognitionService {
         this.estaDetenidoAutomatica = true;
       }
     });
+
   }
 
   comenzar() {
@@ -76,5 +86,48 @@ export class VoiceRecognitionService {
     this.texto = this.texto + ' ' + this.temporales + '.';
     this.temporales = '';
   }
+
+  procesarComandos(comando: string) {
+    clearTimeout(this.commandTimeout);
+    this.partialCommand.push(comando.trim());
+
+    if (this.partialCommand.length === 2) { // **Cambio: Verificar si hay dos palabras**
+      this.analyzeCommands();
+    } else {
+      this.commandTimeout = setTimeout(() => {
+        this.partialCommand = []; // **Cambio: Reiniciar si no se completa el comando**
+      }, 1000); // Espera 1 segundo para recibir la segunda palabra
+    }
+  }
+
+  analyzeCommands() {
+    const fullCommand = this.partialCommand.join(' ').trim();
+    this.partialCommand = [];
+
+    const comandosCasilla: { [key: string]: number } = {
+      'arriba izquierda': 0,
+      'arriba medio': 1,
+      'arriba derecha': 2,
+      'medio izquierda': 3,
+      'medio medio': 4,
+      'medio derecha': 5,
+      'abajo izquierda': 6,
+      'abajo medio': 7,
+      'abajo derecha': 8,
+    };
+  ///////////
+    
+
+    const index = comandosCasilla[fullCommand];
+      console.log(fullCommand);
+      if (index !== undefined && this.tableroComponent) {
+        this.tableroComponent.hacerMovimiento(index);
+      } else {
+        console.log('Comando no reconocido.');
+        console.log('Aquiii lo que no reconocio: ', fullCommand);
+      }
+    
+  }
+
 
 }

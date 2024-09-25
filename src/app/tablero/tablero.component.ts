@@ -69,8 +69,10 @@ export class TableroComponent implements OnInit {
 
   //La parte del servicio de web speech api nativa
   aunEstaReconociendo = false; // bandera para saber si aún esta corriendo el servicio
+  
   constructor(public servicio: VoiceRecognitionService) {
     this.servicio.iniciar();
+    this.servicio.setTableroComponent(this);
   }
 
   ngOnInit(): void {}
@@ -81,6 +83,7 @@ export class TableroComponent implements OnInit {
 
   detenerServicio() {
     this.aunEstaReconociendo = this.servicio.detener() === false ? false : true;
+    this.servicio.procesarComandos(this.servicio.temporales);
   }
 
 }
