@@ -2,5 +2,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 25vh;
 }
+
+button {
+  margin: 12px;
+  border-radius: 6%;
+  padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+  

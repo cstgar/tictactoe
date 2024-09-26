@@ -11,7 +11,6 @@
   grid-template-columns: repeat(3, 100px);
   grid-gap: 5px;
   background-color: #dbade3;
-  
 }
 
 .resetear {
@@ -36,4 +35,11 @@
 
 .btn-contenedor {
   display: inline;
+}
+
+img {
+  position: auto;
+  width: 250px; /* Ajusta el ancho de la imagen */
+  height: auto; /* Mantiene la proporción de la imagen */
+  margin: 20px;
 }
